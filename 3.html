@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Marie Fries – Crispy & Delicious</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#D7263D;--red-dark:#a81c2d;--red-light:#fdecea;
+  --yellow:#FFD230;--yellow-dark:#c9a200;--yellow-light:#fff8d6;
+  --cream:#FFF8E7;--brown:#3D1C02;--brown-mid:#7a3b10;--brown-light:#c8956c;
+  --white:#ffffff;--gray:#f4f4f4;--gray2:#e0ddd7;--text:#2a2a2a;
+  --green:#1a9e5c;--green-light:#e6f7ef;
+  --font-d:'Lilita One',cursive;--font-b:'Nunito',sans-serif;
+  --radius:14px;--shadow:0 4px 18px rgba(61,28,2,.10);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--cream);color:var(--brown);min-height:100vh;overflow-x:hidden}
+
+/* ═══ UTILS ═══ */
+.hidden{display:none!important}
+.page{display:none}
+.page.active{display:block}
+.btn-red{background:var(--red);color:#fff;border:none;border-radius:999px;padding:.6rem 1.4rem;font-family:var(--font-b);font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 3px 0 var(--red-dark);transition:transform .1s,box-shadow .1s;letter-spacing:.01em}
+.btn-red:hover{background:var(--red-dark)}
+.btn-red:active{transform:translateY(2px);box-shadow:0 1px 0 var(--red-dark)}
+.btn-yellow{background:var(--yellow);color:var(--brown);border:none;border-radius:999px;padding:.6rem 1.4rem;font-family:var(--font-b);font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 3px 0 var(--yellow-dark);transition:transform .1s,box-shadow .1s}
+.btn-yellow:hover{background:var(--yellow-dark);color:#fff}
+.btn-yellow:active{transform:translateY(2px);box-shadow:0 1px 0 var(--yellow-dark)}
+.section-title{font-family:var(--font-d);font-size:2rem;color:var(--brown);margin-bottom:1.25rem}
+.section-title span{color:var(--red)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.tag-red{background:var(--red);color:#fff}
+.tag-green{background:var(--green-light);color:var(--green)}
+.tag-yellow{background:var(--yellow-light);color:var(--yellow-dark)}
+
+/* ═══ NAVBAR ═══ */
+nav{position:sticky;top:0;z-index:200;background:var(--red);box-shadow:0 4px 0 var(--red-dark);height:66px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;text-decoration:none}
+.logo-icon{width:44px;height:44px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 var(--yellow-dark);flex-shrink:0}
+.logo-icon svg{width:28px;height:28px}
+.logo-name{font-family:var(--font-d);font-size:1.4rem;color:#fff;text-shadow:2px 2px 0 var(--red-dark)}
+.logo-tag{font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow)}
+.nav-links{display:flex;align-items:center;gap:.15rem;list-style:none;margin-left:auto}
+.nav-links a{padding:.4rem .85rem;border-radius:999px;font-size:.85rem;font-weight:700;color:#fff;text-decoration:none;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{background:var(--yellow);color:var(--brown)}
+.nav-right{display:flex;align-items:center;gap:.6rem;margin-left:.5rem}
+.search-bar{display:flex;align-items:center;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);border-radius:999px;overflow:hidden;transition:background .2s}
+.search-bar:focus-within{background:rgba(255,255,255,.28)}
+.search-bar input{background:none;border:none;outline:none;padding:.38rem .75rem;font-family:var(--font-b);font-size:.83rem;color:#fff;width:140px}
+.search-bar input::placeholder{color:rgba(255,255,255,.65)}
+.search-bar button{background:none;border:none;padding:.38rem .6rem;cursor:pointer;color:#fff;font-size:1rem}
+.cart-btn{position:relative;background:var(--yellow);border:none;border-radius:999px;padding:.45rem 1rem;display:flex;align-items:center;gap:5px;font-family:var(--font-b);font-size:.85rem;font-weight:800;color:var(--brown);cursor:pointer;box-shadow:0 3px 0 var(--yellow-dark);transition:transform .1s,box-shadow .1s;white-space:nowrap}
+.cart-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--yellow-dark)}
+.cart-badge{position:absolute;top:-7px;right:-7px;width:19px;height:19px;background:var(--white);color:var(--red);border-radius:50%;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;margin-left:auto}
+.hamburger span{display:block;width:24px;height:2.5px;background:#fff;border-radius:2px;transition:all .3s}
+.mobile-nav{display:none;flex-direction:column;background:var(--red-dark);padding:1rem 1.5rem 1.5rem;gap:.25rem;position:fixed;top:66px;left:0;right:0;z-index:199}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:.6rem 1rem;border-radius:10px;font-size:.95rem;font-weight:700;color:#fff;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:8px;transition:background .15s}
+.mobile-nav a:hover{background:rgba(255,255,255,.15)}
+.mobile-search{display:flex;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden;margin-bottom:.5rem}
+.mobile-search input{flex:1;background:none;border:none;outline:none;padding:.6rem 1rem;font-family:var(--font-b);font-size:.9rem;color:#fff}
+.mobile-search input::placeholder{color:rgba(255,255,255,.6)}
+.mobile-search button{background:none;border:none;padding:.6rem .8rem;cursor:pointer;color:#fff;font-size:1rem}
+
+/* ═══ HERO ═══ */
+#page-home .hero{background:var(--red);padding:3.5rem 1.5rem 0;text-align:center;overflow:hidden;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--yellow);color:var(--brown);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:1rem}
+.hero h1{font-family:var(--font-d);font-size:clamp(2.6rem,7vw,4.5rem);color:#fff;text-shadow:3px 4px 0 var(--red-dark);line-height:1.05;margin-bottom:.75rem}
+.hero h1 span{color:var(--yellow)}
+.hero p{font-size:1.05rem;color:rgba(255,255,255,.88);max-width:400px;margin:0 auto 1.75rem;line-height:1.6}
+.hero-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;padding-bottom:2rem}
+.hero-emojis{font-size:4rem;letter-spacing:.5rem;margin-top:1rem;display:block}
+
+/* ═══ CTA STRIP ═══ */
+.cta-strip{background:var(--yellow);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.cta-strip p{font-weight:800;font-size:1rem;color:var(--brown)}
+.cta-strip p span{color:var(--red)}
+
+/* ═══ FEATURE ICONS ═══ */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;padding:2.5rem 0}
+.feat-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:var(--shadow)}
+.feat-icon{font-size:2.2rem;margin-bottom:.75rem;display:block}
+.feat-card h3{font-weight:800;font-size:.95rem;margin-bottom:.4rem;color:var(--brown)}
+.feat-card p{font-size:.82rem;color:var(--brown-mid);line-height:1.55}
+
+/* ═══ PROMO BANNER ═══ */
+.promo-banner{background:var(--red);border-radius:var(--radius);padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:0 0 2.5rem;flex-wrap:wrap}
+.promo-banner h2{font-family:var(--font-d);font-size:1.7rem;color:#fff}
+.promo-banner p{font-size:.9rem;color:rgba(255,255,255,.8);margin-top:.3rem}
+
+/* ═══ MENU PAGE ═══ */
+.menu-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:2rem 0 1rem}
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;padding-bottom:1rem}
+.filter-btn{padding:.45rem 1rem;border-radius:999px;border:2px solid var(--brown);background:transparent;font-family:var(--font-b);font-size:.83rem;font-weight:700;color:var(--brown);cursor:pointer;transition:all .18s;white-space:nowrap}
+.filter-btn:hover,.filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.sort-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.sort-row label{font-size:.83rem;font-weight:700;color:var(--brown-mid)}
+.sort-row select{font-family:var(--font-b);font-size:.83rem;border:1.5px solid var(--gray2);border-radius:8px;padding:.35rem .7rem;color:var(--brown);background:var(--white);outline:none}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;padding-bottom:3rem}
+.menu-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:2px solid transparent;transition:transform .22s,box-shadow .22s,border-color .22s;cursor:pointer;position:relative}
+.menu-card:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(61,28,2,.15);border-color:var(--yellow)}
+.card-img{width:100%;height:148px;background:var(--cream);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.badge-pop{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.05em;padding:3px 10px;border-radius:999px}
+.badge-stock{position:absolute;top:10px;left:10px;font-size:.65rem;font-weight:800;letter-spacing:.05em;padding:3px 10px;border-radius:999px;z-index:2}
+.in-stock{background:var(--green-light);color:var(--green)}
+.low-stock{background:#fff3e0;color:#e65100}
+.out-stock{background:var(--red-light);color:var(--red)}
+.card-body{padding:.9rem 1rem 1rem}
+.card-name{font-weight:800;font-size:.95rem;color:var(--brown);margin-bottom:3px}
+.card-desc{font-size:.78rem;color:var(--brown-mid);line-height:1.5;margin-bottom:.7rem}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.card-price{font-family:var(--font-d);font-size:1.2rem;color:var(--red)}
+.add-btn{width:33px;height:33px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 0 var(--red-dark);transition:transform .1s,box-shadow .1s;line-height:1}
+.add-btn:hover{background:var(--red-dark)}
+.add-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--red-dark)}
+.add-btn:disabled{background:var(--gray2);color:#999;box-shadow:none;cursor:not-allowed}
+.no-results{text-align:center;padding:3rem 1rem;color:var(--brown-mid);font-size:1rem}
+
+/* ═══ BASKET / CART ═══ */
+.basket-wrap{max-width:800px;margin:0 auto;padding:2rem 1.5rem 3rem}
+.basket-title{font-family:var(--font-d);font-size:2rem;color:var(--brown);margin-bottom:1.5rem}
+.basket-title span{color:var(--yellow);}
+.basket-empty{text-align:center;padding:3rem 1rem}
+.basket-empty p{font-size:1rem;color:var(--brown-mid);margin-top:.5rem}
+.basket-items{display:flex;flex-direction:column;gap:.85rem;margin-bottom:1.5rem}
+.basket-item{background:var(--white);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow)}
+.b-emoji{font-size:2.2rem;flex-shrink:0}
+.b-info{flex:1}
+.b-name{font-weight:800;font-size:.95rem;color:var(--brown)}
+.b-price{font-size:.85rem;color:var(--brown-mid);margin-top:2px}
+.b-qty{display:flex;align-items:center;gap:.5rem}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:2px solid var(--gray2);background:var(--white);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--brown)}
+.qty-btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+.qty-num{font-weight:800;font-size:.95rem;min-width:20px;text-align:center;color:var(--brown)}
+.b-total{font-family:var(--font-d);font-size:1.1rem;color:var(--red);flex-shrink:0}
+.b-remove{background:none;border:none;cursor:pointer;color:var(--brown-light);font-size:1rem;padding:4px;transition:color .15s}
+.b-remove:hover{color:var(--red)}
+.basket-summary{background:var(--white);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow)}
+.summary-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--brown-mid);padding:.35rem 0}
+.summary-row.total{font-size:1.1rem;font-weight:800;color:var(--brown);border-top:1.5px solid var(--gray2);margin-top:.5rem;padding-top:.75rem}
+.promo-row-b{display:flex;gap:.5rem;margin:.85rem 0}
+.promo-row-b input{flex:1;border:1.5px solid var(--gray2);border-radius:8px;padding:.55rem .85rem;font-family:var(--font-b);font-size:.85rem;outline:none;color:var(--brown)}
+.promo-row-b input:focus{border-color:var(--red)}
+.promo-row-b button{padding:.55rem 1rem;background:var(--red);color:#fff;border:none;border-radius:8px;font-family:var(--font-b);font-weight:800;font-size:.85rem;cursor:pointer}
+.promo-msg{font-size:.78rem;margin-bottom:.5rem;font-weight:700}
+.promo-msg.ok{color:var(--green)}
+.promo-msg.err{color:var(--red)}
+
+/* ═══ CHECKOUT ═══ */
+.checkout-wrap{max-width:900px;margin:0 auto;padding:2rem 1.5rem 3rem;display:grid;grid-template-columns:1fr 340px;gap:2rem;align-items:start}
+.co-card{background:var(--white);border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow);margin-bottom:1.25rem}
+.co-section-title{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:1.25rem;padding-bottom:.65rem;border-bottom:1.5px solid var(--gray2)}
+.form-row-co{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:.78rem;font-weight:700;color:var(--brown-mid)}
+.fg input,.fg select{font-family:var(--font-b);font-size:.92rem;color:var(--brown);border:1.5px solid var(--gray2);border-radius:8px;padding:.6rem .85rem;outline:none;transition:border-color .2s;background:var(--white)}
+.fg input:focus,.fg select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(215,38,61,.09)}
+.fg input.err,.fg select.err{border-color:var(--red)}
+.fg .errmsg{font-size:.72rem;color:var(--red);display:none}
+.fg .errmsg.show{display:block}
+.pm-tabs{display:flex;gap:.6rem;margin-bottom:1rem}
+.pm-tab{flex:1;border:1.5px solid var(--gray2);border-radius:8px;padding:.55rem .4rem;text-align:center;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--brown-mid);transition:all .18s;background:var(--white)}
+.pm-tab.active{border-color:var(--red);background:var(--red-light);color:var(--red)}
+.place-btn{width:100%;padding:.9rem;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:var(--font-b);font-size:1rem;font-weight:800;cursor:pointer;margin-top:1.25rem;box-shadow:0 3px 0 var(--red-dark);transition:transform .1s,box-shadow .1s}
+.place-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--red-dark)}
+.secure-note{text-align:center;font-size:.75rem;color:var(--brown-mid);margin-top:.65rem}
+.order-mini-item{display:flex;justify-content:space-between;font-size:.85rem;color:var(--brown-mid);padding:.3rem 0;border-bottom:1px solid var(--gray2)}
+.order-mini-item:last-of-type{border:none}
+
+/* ═══ ORDER TRACKING ═══ */
+.tracking-wrap{max-width:700px;margin:0 auto;padding:2rem 1.5rem 3rem}
+.track-search{display:flex;gap:.75rem;margin-bottom:2rem}
+.track-search input{flex:1;border:2px solid var(--gray2);border-radius:10px;padding:.7rem 1rem;font-family:var(--font-b);font-size:.95rem;color:var(--brown);outline:none}
+.track-search input:focus{border-color:var(--red)}
+.track-card{background:var(--white);border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow)}
+.track-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}
+.track-id{font-family:var(--font-d);font-size:1.4rem;color:var(--brown)}
+.track-steps{display:flex;flex-direction:column;gap:0}
+.track-step{display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.25rem;position:relative}
+.track-step:last-child{padding-bottom:0}
+.step-line{position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--gray2)}
+.track-step:last-child .step-line{display:none}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;position:relative;z-index:1}
+.step-dot.done{background:var(--green);box-shadow:0 0 0 4px var(--green-light)}
+.step-dot.current{background:var(--yellow);box-shadow:0 0 0 4px var(--yellow-light);animation:pulse 1.5s infinite}
+.step-dot.pending{background:var(--gray2);color:#aaa}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px var(--yellow-light)}50%{box-shadow:0 0 0 8px rgba(255,210,48,.2)}}
+.step-info h4{font-weight:800;font-size:.92rem;color:var(--brown);margin-bottom:2px}
+.step-info p{font-size:.8rem;color:var(--brown-mid)}
+
+/* ═══ INVENTORY ═══ */
+.inv-wrap{max-width:1000px;margin:0 auto;padding:2rem 1.5rem 3rem}
+.inv-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);font-size:.88rem}
+.inv-table th{background:var(--red);color:#fff;padding:.75rem 1rem;text-align:left;font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.inv-table td{padding:.7rem 1rem;border-bottom:1px solid var(--gray2);color:var(--brown);vertical-align:middle}
+.inv-table tr:last-child td{border:none}
+.inv-table tr:hover td{background:var(--cream)}
+.stock-bar-wrap{width:100px;background:var(--gray2);border-radius:999px;height:7px;overflow:hidden}
+.stock-bar{height:100%;border-radius:999px;transition:width .3s}
+.inv-actions{display:flex;gap:2rem;flex-wrap:wrap;align-items:center;margin-bottom:1.25rem}
+.inv-search{flex:1;min-width:180px;border:1.5px solid var(--gray2);border-radius:8px;padding:.55rem .85rem;font-family:var(--font-b);font-size:.88rem;color:var(--brown);outline:none}
+.inv-search:focus{border-color:var(--red)}
+
+/* ═══ SUPPLIERS ═══ */
+.supplier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.25rem;padding-bottom:3rem}
+.sup-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);border-left:5px solid var(--red)}
+.sup-name{font-weight:800;font-size:1rem;color:var(--brown);margin-bottom:.4rem}
+.sup-item{font-size:.82rem;color:var(--brown-mid);margin-bottom:2px}
+.sup-item span{font-weight:700;color:var(--brown)}
+
+/* ═══ REVIEWS ═══ */
+.review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.rev-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+.rev-stars{color:var(--yellow);font-size:1rem;margin-bottom:.5rem;letter-spacing:.1em}
+.rev-text{font-size:.88rem;color:var(--brown-mid);line-height:1.6;margin-bottom:.85rem;font-style:italic}
+.rev-author{display:flex;align-items:center;gap:.6rem}
+.rev-avatar{width:36px;height:36px;border-radius:50%;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:var(--red);flex-shrink:0}
+.rev-name{font-weight:800;font-size:.85rem;color:var(--brown)}
+.rev-date{font-size:.75rem;color:var(--brown-light)}
+.review-form{background:var(--white);border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow);max-width:600px}
+.stars-input{display:flex;gap:.35rem;margin-bottom:1rem;font-size:1.6rem;cursor:pointer}
+.stars-input span{transition:transform .15s;color:var(--gray2)}
+.stars-input span.active{color:var(--yellow)}
+.stars-input span:hover{transform:scale(1.2)}
+.rf-textarea{width:100%;border:1.5px solid var(--gray2);border-radius:8px;padding:.7rem .85rem;font-family:var(--font-b);font-size:.88rem;color:var(--brown);outline:none;resize:vertical;min-height:90px}
+.rf-textarea:focus{border-color:var(--red)}
+.rating-summary{background:var(--yellow-light);border-radius:var(--radius);padding:1.5rem;display:flex;align-items:center;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
+.big-rating{font-family:var(--font-d);font-size:3.5rem;color:var(--brown);line-height:1}
+.rating-bars{flex:1;min-width:180px}
+.rbar-row{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--brown-mid);margin-bottom:.3rem}
+.rbar{flex:1;background:var(--gray2);border-radius:999px;height:8px;overflow:hidden}
+.rbar-fill{height:100%;background:var(--yellow);border-radius:999px}
+
+/* ═══ PHOTO FRAME ═══ */
+.photo-frame{position:relative;width:100%;height:100%;cursor:pointer;overflow:hidden}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-frame .frame-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#fff8e7 0%,#fde8cc 100%);border:2.5px dashed var(--brown-light);transition:background .2s,border-color .2s}
+.photo-frame:hover .frame-placeholder{background:linear-gradient(135deg,#fdecea 0%,#ffd6d6 100%);border-color:var(--red)}
+.photo-frame .frame-icon{font-size:1.8rem;opacity:.55}
+.photo-frame .frame-label{font-size:.72rem;font-weight:800;color:var(--brown-mid);letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:0 .5rem;line-height:1.4}
+.photo-frame .frame-hint{font-size:.65rem;color:var(--brown-light);font-weight:600}
+.photo-frame input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.photo-frame .frame-overlay{position:absolute;inset:0;background:rgba(215,38,61,.0);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,background .2s;font-size:.78rem;font-weight:800;color:#fff;letter-spacing:.04em}
+.photo-frame:hover .frame-overlay{opacity:1;background:rgba(215,38,61,.55)}
+
+/* ═══ OWNER PHOTO FRAME ═══ */
+.owner-photo-frame{width:130px;height:130px;border-radius:50%;margin:0 auto 1.25rem;border:4px solid var(--yellow);box-shadow:0 4px 14px rgba(61,28,2,.15);overflow:hidden;position:relative;cursor:pointer;flex-shrink:0}
+.owner-photo-frame .frame-placeholder{border-radius:50%;border:none;background:linear-gradient(135deg,var(--red-light) 0%,#ffd6d6 100%)}
+.owner-photo-frame .frame-icon{font-size:2.5rem}
+.owner-photo-frame:hover .frame-placeholder{background:linear-gradient(135deg,#fdecea 0%,#ffc0c0 100%)}
+.owner-photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* ═══ ABOUT ═══ */
+.about-hero{background:var(--red);color:#fff;padding:3rem 1.5rem;text-align:center}
+.about-hero h1{font-family:var(--font-d);font-size:2.5rem;margin-bottom:.75rem}
+.about-hero p{max-width:500px;margin:0 auto;line-height:1.7;color:rgba(255,255,255,.85)}
+.owner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;padding:2.5rem 0}
+.owner-card{background:var(--white);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;box-shadow:var(--shadow)}
+.owner-name{font-family:var(--font-d);font-size:1.3rem;color:var(--brown)}
+.owner-role{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brown-mid);margin:.25rem 0 .75rem}
+.owner-bio{font-size:.85rem;color:var(--brown-mid);line-height:1.6}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;padding:2rem 0}
+.prod-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);text-align:center}
+.prod-emoji{font-size:3rem;margin-bottom:.75rem;display:block}
+.prod-name{font-weight:800;font-size:.95rem;color:var(--brown);margin-bottom:.4rem}
+.prod-desc{font-size:.82rem;color:var(--brown-mid);line-height:1.5}
+
+/* ═══ CONTACT ═══ */
+.contact-wrap{max-width:900px;margin:0 auto;padding:2rem 1.5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.contact-info{background:var(--red);border-radius:var(--radius);padding:2rem;color:#fff}
+.contact-info h2{font-family:var(--font-d);font-size:1.6rem;margin-bottom:1.25rem}
+.ci-item{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1.1rem;font-size:.9rem;line-height:1.6}
+.ci-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.ci-label{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:2px}
+.contact-form{background:var(--white);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow)}
+.contact-form h2{font-family:var(--font-d);font-size:1.6rem;color:var(--brown);margin-bottom:1.25rem}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--brown);color:rgba(255,255,255,.7);padding:2rem 1.5rem;margin-top:2rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;margin-bottom:1.5rem}
+.footer-col h4{color:var(--yellow);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.footer-col p,.footer-col a{font-size:.83rem;line-height:1.8;color:rgba(255,255,255,.65);text-decoration:none;display:block}
+.footer-col a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;text-align:center;font-size:.8rem;color:rgba(255,255,255,.45)}
+.footer-bottom strong{color:var(--yellow)}
+
+/* ═══ SUCCESS OVERLAY ═══ */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.overlay.show{display:flex}
+.overlay-box{background:var(--white);border-radius:20px;padding:2.5rem 2rem;text-align:center;max-width:380px;width:100%}
+.overlay-icon{font-size:3.5rem;margin-bottom:.75rem;display:block}
+.overlay-title{font-family:var(--font-d);font-size:1.8rem;color:var(--brown);margin-bottom:.5rem}
+.overlay-msg{font-size:.9rem;color:var(--brown-mid);line-height:1.6;margin-bottom:1.5rem}
+.overlay-order{font-family:var(--font-d);font-size:1.1rem;color:var(--red);margin-bottom:1.25rem}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .checkout-wrap{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .nav-links,.nav-right{display:none}
+  .hamburger{display:flex}
+  .form-row-co{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .menu-grid{grid-template-columns:1fr 1fr}
+  .card-img{height:120px;font-size:3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav>
+  <div class="logo" onclick="goPage('home')">
+    <div class="logo-icon">
+      <svg viewBox="0 0 60 60" fill="none"><rect x="14" y="26" width="32" height="22" rx="4" fill="#D7263D"/><rect x="19" y="12" width="5" height="20" rx="2.5" fill="#FFD230"/><rect x="27.5" y="8" width="5" height="24" rx="2.5" fill="#FFD230"/><rect x="36" y="12" width="5" height="20" rx="2.5" fill="#FFD230"/><rect x="14" y="33" width="32" height="3" fill="#a81c2d"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">Marie Fries</div>
+      <div class="logo-tag">Crispy &amp; Delicious</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="goPage('home')" id="nav-home" class="active">🏠 Home</a></li>
+    <li><a onclick="goPage('menu')" id="nav-menu">🍟 Menu</a></li>
+    <li><a onclick="goPage('track')" id="nav-track">📦 Track Order</a></li>
+    <li><a onclick="goPage('about')" id="nav-about">ℹ️ About</a></li>
+    <li><a onclick="goPage('reviews')" id="nav-reviews">⭐ Reviews</a></li>
+    <li><a onclick="goPage('contact')" id="nav-contact">📞 Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="search-bar">
+      <input type="text" id="nav-search" placeholder="Search menu…" oninput="doSearch(this.value)"/>
+      <button onclick="goPage('menu')">🔍</button>
+    </div>
+    <button class="cart-btn" onclick="goPage('basket')">
+      🧺 Basket <span class="cart-badge" id="cart-count">0</span>
+    </button>
+  </div>
+  <button class="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-search">
+    <input type="text" placeholder="Search menu…" oninput="doSearch(this.value)"/>
+    <button onclick="goPage('menu');toggleMobile()">🔍</button>
+  </div>
+  <a onclick="goPage('home');toggleMobile()">🏠 Home</a>
+  <a onclick="goPage('menu');toggleMobile()">🍟 Menu</a>
+  <a onclick="goPage('basket');toggleMobile()">🧺 Basket</a>
+  <a onclick="goPage('track');toggleMobile()">📦 Track Order</a>
+  <a onclick="goPage('about');toggleMobile()">ℹ️ About</a>
+  <a onclick="goPage('reviews');toggleMobile()">⭐ Reviews</a>
+  <a onclick="goPage('contact');toggleMobile()">📞 Contact</a>
+  <a onclick="goPage('inventory');toggleMobile()">📋 Inventory</a>
+  <a onclick="goPage('suppliers');toggleMobile()">🚚 Suppliers</a>
+</div>
+
+<!-- ═══════════════ PAGE: HOME ═══════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="wrap">
+      <span class="hero-badge">🔥 Open Now – Fresh &amp; Hot</span>
+      <h1>Crispy Fries &amp;<br><span>Big Flavors</span></h1>
+      <p>Burgers, hotdogs, fries and more — made fresh &amp; delivered fast to your door anywhere in Cebu.</p>
+      <div class="hero-btns">
+        <button class="btn-yellow" style="font-size:1rem;padding:.75rem 2rem" onclick="goPage('menu')">🍟 Order Now</button>
+        <button class="btn-red" style="font-size:1rem;padding:.75rem 2rem;background:rgba(255,255,255,.2);box-shadow:none;border:2px solid rgba(255,255,255,.5);color:#fff" onclick="goPage('track')">📦 Track Order</button>
+      </div>
+      <span class="hero-emojis">🍟 🍔 🌭 🥤</span>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <p>🏷️ Today's Deal: <span>Buy 2 Burgers, Get Free Large Fries!</span> Use code <strong>FRIES2GO</strong></p>
+    <button class="btn-red" onclick="goPage('menu')">Grab the Deal</button>
+  </div>
+
+  <div class="wrap">
+    <div class="features">
+      <div class="feat-card"><span class="feat-icon">⚡</span><h3>Fast Delivery</h3><p>Hot food delivered to your door in 30 minutes or less.</p></div>
+      <div class="feat-card"><span class="feat-icon">🔥</span><h3>Always Fresh</h3><p>Every order is cooked fresh — no reheated food, ever.</p></div>
+      <div class="feat-card"><span class="feat-icon">💸</span><h3>Best Value</h3><p>Big portions, fair prices. Meals starting at ₱69 only.</p></div>
+      <div class="feat-card"><span class="feat-icon">📍</span><h3>Cebu-Wide</h3><p>We deliver across Metro Cebu — check our coverage area.</p></div>
+    </div>
+
+    <div class="promo-banner">
+      <div>
+        <div class="tag tag-yellow" style="margin-bottom:.5rem">Limited Time</div>
+        <h2> Ruth Family Feast Combo</h2>
+        <p>4 Burgers + 2 Large Fries + 4 Drinks — only ₱599!</p>
+      </div>
+      <button class="btn-yellow" onclick="goPage('menu')">Order Now →</button>
+    </div>
+
+    <h2 class="section-title">Bestsellers <span>🍟</span></h2>
+    <div class="menu-grid" id="home-bestsellers"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: MENU ═══════════════ -->
+<div id="page-menu" class="page">
+  <div class="wrap">
+    <div class="menu-top">
+      <h2 class="section-title" style="margin:0">Our <span>Menu</span></h2>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <div class="search-bar" style="border:1.5px solid var(--gray2);background:var(--white)">
+          <input type="text" id="menu-search" placeholder="Search items…" style="color:var(--brown)" oninput="doSearch(this.value)"/>
+          <button style="color:var(--brown-mid)">🔍</button>
+        </div>
+      </div>
+    </div>
+    <div class="filter-row" id="filter-row"></div>
+    <div class="sort-row">
+      <label>Sort by:</label>
+      <select id="sort-select" onchange="renderMenu()">
+        <option value="default">Default</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name A–Z</option>
+        <option value="popular">Most Popular</option>
+      </select>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: BASKET ═══════════════ -->
+<div id="page-basket" class="page">
+  <div class="basket-wrap">
+    <h2 class="basket-title">Your <span>🧺</span> Basket</h2>
+    <div id="basket-content"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: CHECKOUT ═══════════════ -->
+<div id="page-checkout" class="page">
+  <div class="checkout-wrap">
+    <div>
+      <div class="co-card">
+        <p class="co-section-title">Contact Information</p>
+        <div class="form-row-co">
+          <div class="fg"><label>First Name</label><input id="co-fn" placeholder="Lorrence"/><span class="errmsg" id="e-fn">Required</span></div>
+          <div class="fg"><label>Last Name</label><input id="co-ln" placeholder="Dimaguiba"/><span class="errmsg" id="e-ln">Required</span></div>
+          <div class="fg full"><label>Email</label><input id="co-email" placeholder="mariefriesph@gmail.com" type="email"/><span class="errmsg" id="e-email">Valid email required</span></div>
+          <div class="fg full"><label>Phone</label><input id="co-phone" placeholder="09XX XXX XXXX"/><span class="errmsg" id="e-phone">Required</span></div>
+        </div>
+      </div>
+      <div class="co-card">
+        <p class="co-section-title">Delivery Address</p>
+        <div class="form-row-co">
+          <div class="fg full"><label>Street Address</label><input id="co-addr" placeholder="123 Burlas St."/><span class="errmsg" id="e-addr">Required</span></div>
+          <div class="fg full"><label>Apartment / Unit (optional)</label><input id="co-addr2" placeholder="Unit 4B"/></div>
+          <div class="fg"><label>City / Municipality</label><input id="co-city" placeholder="Cebu City"/><span class="errmsg" id="e-city">Required</span></div>
+          <div class="fg"><label>Province</label>
+            <select id="co-prov"><option value="">Select…</option><option>Cebu City</option><option>Mandaue</option><option>Pardo</option><option>Basak</option><option>Talisay</option><option>Mambaling</option><option>Other</option></select>
+            <span class="errmsg" id="e-prov">Required</span>
+          </div>
+          <div class="fg"><label>ZIP Code</label><input id="co-zip" placeholder="6000" maxlength="6"/><span class="errmsg" id="e-zip">Required</span></div>
+          <div class="fg"><label>Delivery Note (optional)</label><input id="co-note" placeholder="Labayig Bato"/></div>
+        </div>
+      </div>
+      <div class="co-card">
+        <p class="co-section-title">Payment Method</p>
+        <div class="pm-tabs">
+          <div class="pm-tab active" onclick="setPM(this,'card')">💳 Credit Card</div>
+          <div class="pm-tab" onclick="setPM(this,'gcash')">📱 GCash</div>
+          <div class="pm-tab" onclick="setPM(this,'cod')">💵 Cash on Delivery</div>
+        </div>
+        <div id="pm-card">
+          <div class="fg"><label>Card Number</label><input id="co-card" placeholder="0000 0000 0000 0000" maxlength="19" oninput="fmtCard(this)"/><span class="errmsg" id="e-card">Valid card number required</span></div>
+          <div class="form-row-co">
+            <div class="fg"><label>Expiry</label><input id="co-exp" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)"/><span class="errmsg" id="e-exp">Required</span></div>
+            <div class="fg"><label>CVV</label><input id="co-cvv" placeholder="•••" maxlength="4"/><span class="errmsg" id="e-cvv">Required</span></div>
+          </div>
+          <div class="fg"><label>Name on Card</label><input id="co-cname" placeholder="Full name"/><span class="errmsg" id="e-cname">Required</span></div>
+        </div>
+        <div id="pm-gcash" class="hidden">
+          <div class="fg"><label>GCash Number</label><input id="co-gcash" placeholder="09XX XXX XXXX"/><span class="errmsg" id="e-gcash">Required</span></div>
+          <p style="font-size:.82rem;color:var(--brown-mid);line-height:1.6">You'll receive a payment prompt on GCash after placing your order.</p>
+        </div>
+        <div id="pm-cod" class="hidden">
+          <div style="background:var(--green-light);border-radius:10px;padding:1rem;font-size:.88rem;color:var(--green);line-height:1.6">
+            💵 Pay in cash when your order arrives. Please prepare the exact amount.
+          </div>
+        </div>
+        <button class="place-btn" onclick="placeOrder()">Place Order 🍟</button>
+        <p class="secure-note">🔒 Secured with 256-bit SSL encryption</p>
+      </div>
+    </div>
+    <!-- Order Summary Side -->
+    <div>
+      <div class="co-card" style="position:sticky;top:80px">
+        <p class="co-section-title">Order Summary</p>
+        <div id="co-items"></div>
+        <div class="promo-row-b">
+          <input type="text" id="co-promo" placeholder="Promo code"/>
+          <button onclick="applyPromo('co-promo','co-promo-msg','co-total-wrap')">Apply</button>
+        </div>
+        <p id="co-promo-msg" class="promo-msg" style="display:none"></p>
+        <div id="co-total-wrap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: TRACK ═══════════════ -->
+<div id="page-track" class="page">
+  <div class="tracking-wrap">
+    <h2 class="section-title">Track Your <span>Order</span></h2>
+    <p style="color:var(--brown-mid);margin-bottom:1.5rem;font-size:.9rem">Enter your Order ID to check the latest status of your delivery.</p>
+    <div class="track-search">
+      <input type="text" id="track-input" placeholder="e.g. C-81258387" />
+      <button class="btn-red" onclick="trackOrder()">Track</button>
+    </div>
+    <div id="track-result"></div>
+    <div style="margin-top:1.5rem">
+      <p style="font-size:.82rem;color:var(--brown-mid);margin-bottom:.75rem;font-weight:700">📋 Sample Order IDs to try:</p>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-24345754';trackOrder()">C-24345754</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-32146024';trackOrder()">C-32146024</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-53543674';trackOrder()">C-53543674</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-83249034';trackOrder()">C-83249034</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-71238943';trackOrder()">C-71238943</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-68294032';trackOrder()">C-68294032</button>
+        <button class="filter-btn" onclick="document.getElementById('track-input').value='C-40123841';trackOrder()">C-40123841</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: INVENTORY ═══════════════ -->
+<div id="page-inventory" class="page">
+  <div class="inv-wrap">
+    <h2 class="section-title">Inventory <span>System</span></h2>
+    <div class="inv-actions">
+      <input class="inv-search" type="text" placeholder="Search product…" oninput="filterInventory(this.value)"/>
+      <div style="font-size:.85rem;color:var(--brown-mid)">
+        <span style="color:var(--green);font-weight:700">● In Stock</span> &nbsp;
+        <span style="color:#e65100;font-weight:700">● Low Stock</span> &nbsp;
+        <span style="color:var(--red);font-weight:700">● Out of Stock</span>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="inv-table" id="inv-table">
+        <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Level</th><th>Status</th></tr></thead>
+        <tbody id="inv-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: SUPPLIERS ═══════════════ -->
+<div id="page-suppliers" class="page">
+  <div class="wrap" style="padding-top:2rem;padding-bottom:3rem">
+    <h2 class="section-title">Our <span>Suppliers</span></h2>
+    <p style="color:var(--brown-mid);margin-bottom:2rem;max-width:550px;line-height:1.7">Marie Fries partners with trusted local and national suppliers to ensure the freshest ingredients and quality products for every order.</p>
+    <div class="supplier-grid" id="supplier-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: REVIEWS ═══════════════ -->
+<div id="page-reviews" class="page">
+  <div class="wrap" style="padding-top:2rem;padding-bottom:3rem">
+    <h2 class="section-title">Customer <span>Reviews</span></h2>
+    <div class="rating-summary">
+      <div>
+        <div class="big-rating" id="avg-rating">4.8</div>
+        <div style="color:var(--yellow);font-size:1.2rem;margin:.3rem 0">★★★★★</div>
+        <div style="font-size:.82rem;color:var(--brown-mid)" id="total-reviews">Based on 48 reviews</div>
+      </div>
+      <div class="rating-bars" id="rating-bars"></div>
+    </div>
+    <div class="review-grid" id="review-grid"></div>
+    <h3 class="section-title" style="font-size:1.4rem">Leave a <span>Review</span></h3>
+    <div class="review-form">
+      <div class="fg"><label>Your Name</label><input id="rv-name" placeholder="Dan Sweeto"/></div>
+      <label style="font-size:.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:.35rem;display:block">Rating</label>
+      <div class="stars-input" id="star-input">
+        <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+      </div>
+      <div class="fg"><label>Review</label><textarea id="rv-text" class="rf-textarea" placeholder="Tell us about your experience…"></textarea></div>
+      <button class="btn-red" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: ABOUT ═══════════════ -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <h1>About Marie Fries 🍟</h1>
+    <p>We're a Cebu-based fast food e-commerce brand passionate about delivering crispy, delicious food right to your doorstep. Started as a school project, Marie Fries grew into a full-featured food ordering platform.</p>
+  </div>
+  <div class="wrap">
+    <div style="background:var(--white);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow);margin:2rem 0;max-width:700px">
+      <h3 style="font-family:var(--font-d);font-size:1.5rem;color:var(--brown);margin-bottom:1rem">Our <span style="color:var(--red)">Story</span></h3>
+      <p style="font-size:.9rem;color:var(--brown-mid);line-height:1.8;margin-bottom:.85rem">Marie Fries was founded with a simple belief: everyone deserves great fast food at a fair price. We specialize in golden crispy fries, juicy smash burgers, and all-beef hotdogs — all prepared fresh for every order.</p>
+      <p style="font-size:.9rem;color:var(--brown-mid);line-height:1.8">Our platform features a full inventory system, real-time order tracking, and a seamless checkout process — making ordering as satisfying as eating.</p>
+    </div>
+
+    <h2 class="section-title">Meet the <span>Owners</span></h2>
+    <div class="owner-grid">
+      <div class="owner-card">
+        <div class="owner-photo-frame" title="Click to upload Khael's photo">
+          <div class="frame-placeholder" id="khael-placeholder">
+            <span class="frame-icon">📷</span>
+            <span class="frame-label">Khael's Photo</span>
+            <span class="frame-hint">Click to upload</span>
+          </div>
+          <img id="khael-img" src="" alt="Khael Cabajar" style="display:none"/>
+          <input type="file" accept="image/*" onchange="loadOwnerPhoto(this,'khael-img','khael-placeholder')" title="Upload Khael's photo"/>
+        </div>
+        <div class="owner-name">Khael Cabajar</div>
+        <div class="owner-role">Co-Founder &amp; Lead Developer</div>
+        <p class="owner-bio">Khael handles the platform development and operations of Marie Fries. Passionate about tech and good food, he built the entire ordering system from scratch arigatou gozaimasu.</p>
+      </div>
+      <div class="owner-card">
+        <div class="owner-photo-frame" title="Click to upload Marnel's photo">
+          <div class="frame-placeholder" id="marnel-placeholder">
+            <span class="frame-icon">📷</span>
+            <span class="frame-label">Marnel's Photo</span>
+            <span class="frame-hint">Click to upload</span>
+          </div>
+          <img id="marnel-img" src="" alt="Marnel Navares" style="display:none"/>
+          <input type="file" accept="image/*" onchange="loadOwnerPhoto(this,'marnel-img','marnel-placeholder')" title="Upload Marnel's photo"/>
+        </div>
+        <div class="owner-name">Marnel Navares</div>
+        <div class="owner-role">Co-Founder &amp; Operations</div>
+        <p class="owner-bio">Marnel oversees product quality, supplier relations, and customer experience at Marie Fries. He ensures every order meets the Marie Fries standard of crispiness yoroshiku onegaishimasu.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:1rem">About Our <span>Products</span></h2>
+    <div class="product-grid">
+      <div class="prod-card"><span class="prod-emoji">🍟</span><div class="prod-name">Fries</div><p class="prod-desc">Our signature item — golden crinkle-cut fries seasoned to perfection. Available in Classic, Loaded Cheese, Spicy Sriracha, and Truffle.</p></div>
+      <div class="prod-card"><span class="prod-emoji">🍔</span><div class="prod-name">Burgers</div><p class="prod-desc">Smash-style beef patties, fresh brioche buns, and house-made sauces. Every burger is made to order.</p></div>
+      <div class="prod-card"><span class="prod-emoji">🌭</span><div class="prod-name">Hotdogs</div><p class="prod-desc">All-beef franks in toasted buns, with classic and loaded toppings including chili, cheese, and jalapeños.</p></div>
+      <div class="prod-card"><span class="prod-emoji">🥤</span><div class="prod-name">Drinks</div><p class="prod-desc">Freshly made lemonades, creamy milkshakes, and iced teas to wash down your favorite meal.</p></div>
+      <div class="prod-card"><span class="prod-emoji">📦</span><div class="prod-name">Combos</div><p class="prod-desc">Value meal combos for solo and group orders. Our Ruth Family Feast is the best deal on the menu.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: CONTACT ═══════════════ -->
+<div id="page-contact" class="page">
+  <div class="wrap" style="padding-top:2rem">
+    <h2 class="section-title">Get in <span>Touch</span></h2>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h2>Contact Details</h2>
+      <div class="ci-item"><span class="ci-icon">📍</span><div><div class="ci-label">Address</div> 143 Alumnos St., Cebu City, Cebu, Philippines 6000</div></div>
+      <div class="ci-item"><span class="ci-icon">📞</span><div><div class="ci-label">Phone</div>0991-900-7872 / 0992-2189-014</div></div>
+      <div class="ci-item"><span class="ci-icon">📧</span><div><div class="ci-label">Email</div>mariefriesph@gmail.com</div></div>
+      <div class="ci-item"><span class="ci-icon">🕐</span><div><div class="ci-label">Hours</div>Mon – Sun: 10:00 AM – 10:00 PM</div></div>
+      <div class="ci-item"><span class="ci-icon">📘</span><div><div class="ci-label">Facebook</div> fb.com/MarieFriesPH</div></div>
+      <div class="ci-item"><span class="ci-icon">📸</span><div><div class="ci-label">Instagram</div>@mariefries.ph</div></div>
+    </div>
+    <div class="contact-form">
+      <h2>Send a Message</h2>
+      <div class="fg"><label>Name</label><input id="cf-name" placeholder="Your name"/></div>
+      <div class="fg"><label>Email</label><input id="cf-email" placeholder="your@email.com" type="email"/></div>
+      <div class="fg"><label>Subject</label><input id="cf-subj" placeholder="Order issue, feedback…"/></div>
+      <div class="fg"><label>Message</label><textarea id="cf-msg" class="rf-textarea" style="min-height:120px" placeholder="Write your message here…"></textarea></div>
+      <button class="btn-red" style="width:100%" onclick="sendMsg()">Send Message 📨</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Marie Fries</h4>
+      <p>Crispy &amp; Delicious fast food delivered to your door. Cebu City, Philippines.</p>
+      <p style="margin-top:.5rem">📞 0991-900-7872/0992-2189-014</p>
+      <p>📧 mariefriesph@gmail.com</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a onclick="goPage('home')">🏠 Home</a>
+      <a onclick="goPage('menu')">🍟 Menu</a>
+      <a onclick="goPage('track')">📦 Track Order</a>
+      <a onclick="goPage('about')">ℹ️ About Us</a>
+      <a onclick="goPage('reviews')">⭐ Reviews</a>
+      <a onclick="goPage('contact')">📞 Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Admin</h4>
+      <a onclick="goPage('inventory')">📋 Inventory System</a>
+      <a onclick="goPage('suppliers')">🚚 Suppliers List</a>
+      <h4 style="margin-top:1rem">Follow Us</h4>
+      <a>📘 Facebook: MarieFriesPH</a>
+      <a>📸 Instagram: @mariefries.ph</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <strong>Marie Fries</strong> © 2025 | Owned by Khael Cabajar &amp; Marnel Navares | All Rights Reserved
+    <br><span style="font-size:.72rem;opacity:.5;margin-top:.4rem;display:inline-block">
+      <button onclick="clearAllPhotos()" style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.72rem;font-family:var(--font-b);text-decoration:underline">🗑️ Clear uploaded photos</button>
+    </span>
+  </div>
+</footer>
+
+<!-- SUCCESS OVERLAY -->
+<div class="overlay" id="success-overlay">
+  <div class="overlay-box">
+    <span class="overlay-icon">🎉</span>
+    <div class="overlay-title">Order Placed!</div>
+    <div class="overlay-order" id="success-order-id">Order #C-20260001</div>
+    <div class="overlay-msg">Thank you for ordering from Marie Fries! Your food is being prepared fresh. Check your email for confirmation and use your Order ID to track your delivery.</div>
+    <button class="btn-red" style="width:100%;margin-bottom:.75rem" onclick="closeSuccess();goPage('track')">📦 Track My Order</button>
+    <button class="btn-yellow" style="width:100%" onclick="closeSuccess();goPage('home')">Continue Shopping</button>
+  </div>
+</div>
+
+<div class="overlay" id="msg-overlay">
+  <div class="overlay-box">
+    <span class="overlay-icon" id="msg-icon">✅</span>
+    <div class="overlay-title" id="msg-title">Done!</div>
+    <div class="overlay-msg" id="msg-body"></div>
+    <button class="btn-red" style="width:100%" onclick="document.getElementById('msg-overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+// ═══ DATA ═══
+const MENU = [
+  {id:1,name:"BBKing Classic Crinkle Fries",desc:"Golden crispy crinkle-cut fries with sea salt.",price:69,emoji:"🍟",cat:"fries",popular:true,stock:80},
+  {id:2,name:"Loaded Cheese Fries",desc:"Crinkle fries smothered in creamy cheddar sauce.",price:99,emoji:"🧀",cat:"fries",popular:false,stock:45},
+  {id:3,name:"Marie Spicy Sriracha Fries",desc:"Seasoned fries with a fiery sriracha drizzle.",price:89,emoji:"🌶️",cat:"fries",popular:true,stock:12},
+  {id:4,name:"Truffle Parmesan Fries",desc:"Shoestring fries with truffle oil and parmesan.",price:119,emoji:"✨",cat:"fries",popular:false,stock:0},
+  {id:5,name:"BBQueen Smash Burger",desc:"Double smash patty, American cheese, pickles & secret sauce.",price:149,emoji:"🍔",cat:"burger",popular:true,stock:60},
+  {id:6,name:"BBQ Bacon Burger",desc:"Smoky BBQ sauce, crispy bacon, caramelized onions.",price:169,emoji:"🥓",cat:"burger",popular:false,stock:30},
+  {id:7,name:"Crispy Chicken Burger",desc:"Crunchy fried chicken fillet with house coleslaw.",price:139,emoji:"🍗",cat:"burger",popular:true,stock:25},
+  {id:8,name:"Mushroom Swiss Burger",desc:"Beef patty topped with sautéed mushrooms & Swiss cheese.",price:159,emoji:"🍄",cat:"burger",popular:false,stock:8},
+  {id:9,name:"BBPrince Classic Beef Hotdog",desc:"All-beef frank in a toasted brioche bun.",price:79,emoji:"🌭",cat:"hotdog",popular:false,stock:55},
+  {id:10,name:"Cheesy Chili Dog",desc:"Beef hotdog with chili and melted cheese.",price:99,emoji:"🌭",cat:"hotdog",popular:true,stock:40},
+  {id:11,name:"Corndog Bites (6 pcs)",desc:"Golden-fried mini corndogs with dipping sauce.",price:89,emoji:"🍡",cat:"hotdog",popular:false,stock:70},
+  {id:12,name:"BBPrincess Iced Lemonade",desc:"Freshly squeezed lemonade over crushed ice.",price:59,emoji:"🍋",cat:"drink",popular:false,stock:100},
+  {id:13,name:"Chocolate Milkshake",desc:"Thick creamy chocolate milkshake.",price:79,emoji:"🥤",cat:"drink",popular:true,stock:35},
+  {id:14,name:"BBQueen Burgers + BBKing Fries Combo",desc:"Smash burger + Classic Fries + 1 Drink.",price:250  ,emoji:"📦",cat:"combo",popular:true,stock:50},
+  {id:15,name:"Ruth Family Feast Combo",desc:"4 Burgers + 2 Large Fries + 4 Drinks.",price:799,emoji:"🎉",cat:"combo",popular:true,stock:20},
+];
+
+const CATS = [
+  {key:'all',label:'🍽️ All'},
+  {key:'fries',label:'🍟 Fries'},
+  {key:'burger',label:'🍔 Burgers'},
+  {key:'hotdog',label:'🌭 Hotdogs'},
+  {key:'drink',label:'🥤 Drinks'},
+  {key:'combo',label:'📦 Combos'},
+];
+
+const SUPPLIERS = [
+  {name:"Cebu Agri-Fresh Co.",supplies:"Potatoes, Onions, Tomatoes",contact:"0917-111-2222",location:"Carcar, Cebu",since:"2025"},
+  {name:"Metro Meat Distributors",supplies:"Beef Patties, All-Beef Franks, Bacon",contact:"0912-333-4444",location:"Mandaue, Cebu",since:"2025"},
+  {name:"Golden Bun Bakehouse",supplies:"Brioche Buns, Corndog Sticks",contact:"0918-555-6666",location:"Cebu City",since:"2025"},
+  {name:"PrimeDairy PH",supplies:"Cheddar Cheese, Swiss Cheese, Butter",contact:"0919-777-8888",location:"Lapu-Lapu, Cebu",since:"2025"},
+  {name:"SauceHouse Cebu",supplies:"House Sauces, Sriracha, BBQ Sauce",contact:"0920-999-0000",location:"Talisay, Cebu",since:"2025"},
+  {name:"CoolDrinks Supply",supplies:"Lemonade Concentrate, Chocolate Mix",contact:"0921-222-3333",location:"Cebu City",since:"2025"},
+  {name:"FryMaster Oils",supplies:"Cooking Oil, Truffle Oil",contact:"0922-444-5555",location:"Minglanilla, Cebu",since:"2025"},
+  {name:"PackRight Solutions",supplies:"Food Packaging, Boxes, Cups",contact:"0923-666-7777",location:"Consolacion, Cebu",since:"2025"},,
+];
+
+const SAMPLE_ORDERS = {
+  'C-24345754': {customer:"Fr. Joel E Asuncion",items:["BBQueen Smash Burger","BBKing Classic Crinkle Fries","Chocolate Milkshake"],total:297,step:3},
+  'C-32146024': {customer:"Ms. Judeth Inso",items:["Ruth Family Feast Combo"],total:799,step:1},
+  'C-53543674': {customer:"Ms. Shobe Marie Ansay",items:["Cheesy Chili Dog"," BBPrincess Iced Lemonade"],total:158,step:4},
+  'C-83249034': {customer:"Ms. Marie Chrise Costelo",items:["Cheesy Chili Dog","Chocolate Milkshake","BBPrince Classic Beef Hotdog"],total:257,step:2},
+  'C-71238943': {customer:"Mr. Erdelou Capablanca",items:["Cheesy Chili Dog"," BBPrincess Iced Lemonade",""],total:158,step:2},
+  'C-68294032': {customer:"Mr. Yuri Myron Adolfo",items:["BBQ Bacon Burger"," BBPrincess Iced Lemonade",""],total:228,step:1},
+  'C-40123841': {customer:"Ms. Aira Ambrad",items:["Ruth Family Feast Combo"],total:799,step:3},
+};
+
+const TRACK_STEPS = [
+  {label:"Order Placed",desc:"Your order has been received.",icon:"📋"},
+  {label:"Being Prepared",desc:"Our kitchen is cooking your food fresh.",icon:"👨‍🍳"},
+  {label:"Out for Delivery",desc:"Your rider is on the way!",icon:"🛵"},
+  {label:"Delivered",desc:"Enjoy your meal! 🍟",icon:"✅"},
+];
+
+const REVIEWS_DATA = [
+  {name:"Kim Sabado.",rating:5,text:"The best fries I've ever had najud! Crispy, hot, and delivered on time. Will definitely order again puhon mayng lawas.",date:"Mar 10, 2026"},
+  {name:"Diana Torimasu.",rating:5,text:"Smash burger was absolutely perfect. The sauce is addictive murag hmm. 10/10 would recommend to everyone!",date:"Apr 8, 2026"},
+  {name:"Lorenz Yongkiss.",rating:4,text:"Great food and fast delivery gi deliver jud sa pinamungahan. The cheesy chili dog is amazing. Just wish they had more drink options.",date:"Apr 5, 2026"},
+  {name:"Kent Yipyap.",rating:5,text:"Ruth Family Feast Combo is such great value sa tinoud anay lang! Fed our whole family and everyone loved it.",date:"Apr 2, 2026"},
+  {name:"Brentda Mage.",rating:5,text:"Truffle fries are unbelievable. I order this every week now. laban kaayu never disappoints!",date:"Mar 30, 2026"},
+  {name:"Shyra Gebsgebs.",rating:4,text:"Good burgers, good portions. Delivery was slightly delayed but the food was still hot, and nabusog jud mi ni bff",date:"Mar 25, 2026"},
+  {name:"Ceecula Lapingcao.",rating:5,text:"Matsalam dol",date:"Mar 29, 2026"},
+  {name:"Jayrome Echavez.",rating:4,text:"Great service and delicious food! pirting lamia",date:"Apr 8, 2026"},
+  {name:"XianFord Costanilla.",rating:4,text:"Lami raman tanan as in 100% recommended",date:"Apr 10, 2026"},
+  
+];
+
+// ═══ STATE ═══
+let cart = [];
+let currentCat = 'all';
+let searchQuery = '';
+let selectedStars = 0;
+let currentPM = 'card';
+let promoApplied = false;
+
+// ═══ NAVIGATION ═══
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.remove('active');
+    if(a.id==='nav-'+id) a.classList.add('active');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='basket') renderBasket();
+  if(id==='checkout') renderCheckoutSummary();
+  if(id==='inventory') renderInventory();
+  if(id==='suppliers') renderSuppliers();
+  if(id==='reviews') renderReviews();
+  if(id==='home') renderBestsellers();
+  if(id==='menu') renderMenu();
+}
+
+function toggleMobile(){
+  document.getElementById('mobile-nav').classList.toggle('open');
+}
+
+// ═══ MENU ═══
+function initFilters(){
+  const fr = document.getElementById('filter-row');
+  if(!fr) return;
+  fr.innerHTML = CATS.map(c=>`<button class="filter-btn${c.key==='all'?' active':''}" onclick="setCat('${c.key}',this)">${c.label}</button>`).join('');
+}
+function setCat(cat, btn){
+  currentCat=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderMenu();
+}
+function doSearch(q){
+  searchQuery=q.toLowerCase();
+  if(searchQuery) goPage('menu');
+  renderMenu();
+}
+function stockLabel(s){
+  if(s===0) return '<span class="badge-stock out-stock">Out of Stock</span>';
+  if(s<15) return '<span class="badge-stock low-stock">Low Stock</span>';
+  return '<span class="badge-stock in-stock">In Stock</span>';
+}
+function photoFrame(id,label){
+  const stored=productPhotos[id];
+  if(stored) return `<img src="${stored}" alt="${label}" style="width:100%;height:100%;object-fit:cover;display:block"/>`;
+  return `<div class="photo-frame" style="width:100%;height:100%" title="Click to add product photo">
+    <div class="frame-placeholder">
+      <span class="frame-icon">📷</span>
+      <span class="frame-label">${label}</span>
+      <span class="frame-hint">Click to upload</span>
+    </div>
+    <div class="frame-overlay">📷 Change Photo</div>
+    <input type="file" accept="image/*" onchange="saveProductPhoto(${id},this)" title="Upload product photo"/>
+  </div>`;
+}
+
+function renderMenu(){
+  const grid = document.getElementById('menu-grid');
+  if(!grid) return;
+  let items = MENU.filter(i=>(currentCat==='all'||i.cat===currentCat));
+  if(searchQuery) items=items.filter(i=>i.name.toLowerCase().includes(searchQuery)||i.desc.toLowerCase().includes(searchQuery));
+  const sort = document.getElementById('sort-select')?.value||'default';
+  if(sort==='price-asc') items.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-desc') items.sort((a,b)=>b.price-a.price);
+  else if(sort==='name') items.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sort==='popular') items.sort((a,b)=>b.popular-a.popular);
+  if(!items.length){grid.innerHTML='<div class="no-results">😕 No items found. Try a different search or filter.</div>';return;}
+  grid.innerHTML=items.map(item=>`
+    <div class="menu-card">
+      <div class="card-img">
+        ${photoFrame(item.id, item.name)}
+        ${item.popular?'<span class="badge-pop" style="z-index:2">⭐ Popular</span>':''}
+        ${stockLabel(item.stock)}
+      </div>
+      <div class="card-body">
+        <p class="card-name">${item.name}</p>
+        <p class="card-desc">${item.desc}</p>
+        <div class="card-footer">
+          <span class="card-price">₱${item.price}</span>
+          <button class="add-btn" onclick="addToCart(${item.id})" ${item.stock===0?'disabled title="Out of stock"':''}>+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function renderBestsellers(){
+  const g=document.getElementById('home-bestsellers');
+  if(!g) return;
+  const items=MENU.filter(i=>i.popular).slice(0,4);
+  g.innerHTML=items.map(item=>`
+    <div class="menu-card">
+      <div class="card-img">
+        ${photoFrame(item.id, item.name)}
+        ${item.popular?'<span class="badge-pop" style="z-index:2">⭐ Popular</span>':''}
+        ${stockLabel(item.stock)}
+      </div>
+      <div class="card-body">
+        <p class="card-name">${item.name}</p><p class="card-desc">${item.desc}</p>
+        <div class="card-footer">
+          <span class="card-price">₱${item.price}</span>
+          <button class="add-btn" onclick="addToCart(${item.id})" ${item.stock===0?'disabled':''}>+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══ CART ═══
+function addToCart(id){
+  const item=MENU.find(i=>i.id===id);
+  if(!item||item.stock===0) return;
+  const existing=cart.find(c=>c.id===id);
+  if(existing) existing.qty++;
+  else cart.push({...item,qty:1});
+  updateCartBadge();
+  showToast('Added to basket! 🧺');
+}
+function updateCartBadge(){
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-count').textContent=total;
+}
+function showToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:1.5rem;right:1.5rem;background:var(--green);color:#fff;padding:.65rem 1.25rem;border-radius:999px;font-weight:700;font-size:.88rem;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.2);animation:fadeIn .3s ease';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2200);
+}
+
+// ═══ BASKET ═══
+function renderBasket(){
+  const wrap=document.getElementById('basket-content');
+  if(!wrap) return;
+  if(!cart.length){
+    wrap.innerHTML=`<div class="basket-empty"><span style="font-size:4rem">🧺</span><p>Your basket is empty!</p><button class="btn-red" style="margin-top:1rem" onclick="goPage('menu')">Browse Menu</button></div>`;
+    return;
+  }
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const delivery=subtotal>=500?0:59;
+  const total=subtotal+delivery;
+  wrap.innerHTML=`
+    <div class="basket-items">${cart.map(item=>`
+      <div class="basket-item">
+        <span class="b-emoji">${item.emoji}</span>
+        <div class="b-info">
+          <div class="b-name">${item.name}</div>
+          <div class="b-price">₱${item.price} each</div>
+        </div>
+        <div class="b-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+        <span class="b-total">₱${item.price*item.qty}</span>
+        <button class="b-remove" onclick="removeItem(${item.id})">✕</button>
+      </div>`).join('')}
+    </div>
+    <div class="basket-summary">
+      <div class="summary-row"><span>Subtotal</span><span>₱${subtotal}</span></div>
+      <div class="summary-row"><span>Delivery${subtotal>=500?' (FREE on orders ₱500+)':''}</span><span>₱${delivery}</span></div>
+      <div class="summary-row total"><span>Total</span><span>₱${total}</span></div>
+      <div class="promo-row-b">
+        <input type="text" id="b-promo" placeholder="Promo code (try FRIES2GO)"/>
+        <button onclick="applyPromo('b-promo','b-promo-msg','b-total-wrap')">Apply</button>
+      </div>
+      <p id="b-promo-msg" class="promo-msg" style="display:none"></p>
+      <div id="b-total-wrap"></div>
+      <button class="btn-red" style="width:100%;margin-top:1rem;font-size:1rem;padding:.85rem" onclick="goPage('checkout')">Proceed to Checkout →</button>
+      <button style="width:100%;margin-top:.6rem;background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--brown-mid);font-family:var(--font-b);font-weight:700" onclick="cart=[];updateCartBadge();renderBasket()">🗑️ Clear Basket</button>
+    </div>`;
+}
+function changeQty(id,delta){
+  const item=cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qty+=delta;
+  if(item.qty<=0) cart=cart.filter(i=>i.id!==id);
+  updateCartBadge();
+  renderBasket();
+}
+function removeItem(id){
+  cart=cart.filter(i=>i.id!==id);
+  updateCartBadge();
+  renderBasket();
+}
+function applyPromo(inputId,msgId,wrapId){
+  const code=document.getElementById(inputId).value.trim().toUpperCase();
+  const msg=document.getElementById(msgId);
+  const wrap=document.getElementById(wrapId);
+  if(code==='FRIES2GO'){
+    msg.textContent='✓ Code applied! 10% off your order.';msg.className='promo-msg ok';msg.style.display='block';
+    promoApplied=true;
+    if(wrap){
+      const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+      const disc=Math.round(sub*.1);
+      wrap.innerHTML=`<div class="summary-row" style="color:var(--green)"><span>Discount (10%)</span><span>−₱${disc}</span></div>`;
+    }
+  } else {
+    msg.textContent='✗ Invalid promo code.';msg.className='promo-msg err';msg.style.display='block';promoApplied=false;
+    if(wrap) wrap.innerHTML='';
+  }
+}
+
+// ═══ CHECKOUT ═══
+function renderCheckoutSummary(){
+  const wrap=document.getElementById('co-items');
+  const tw=document.getElementById('co-total-wrap');
+  if(!wrap||!tw) return;
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const del=sub>=500?0:59;
+  wrap.innerHTML=cart.map(i=>`<div class="order-mini-item"><span>${i.emoji} ${i.name} ×${i.qty}</span><span>₱${i.price*i.qty}</span></div>`).join('');
+  tw.innerHTML=`
+    <div class="summary-row"><span>Subtotal</span><span>₱${sub}</span></div>
+    <div class="summary-row"><span>Delivery</span><span>₱${del}</span></div>
+    <div class="summary-row total"><span>Total</span><span>₱${sub+del}</span></div>`;
+}
+function setPM(btn,method){
+  currentPM=method;
+  document.querySelectorAll('.pm-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pm-card').classList.toggle('hidden',method!=='card');
+  document.getElementById('pm-gcash').classList.toggle('hidden',method!=='gcash');
+  document.getElementById('pm-cod').classList.toggle('hidden',method!=='cod');
+}
+function fmtCard(el){let v=el.value.replace(/\D/g,'').substring(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();}
+function fmtExp(el){let v=el.value.replace(/\D/g,'').substring(0,4);if(v.length>=3)v=v.substring(0,2)+' / '+v.substring(2);el.value=v;}
+function clearErrs(){document.querySelectorAll('.errmsg').forEach(e=>{e.classList.remove('show');});document.querySelectorAll('.fg input,.fg select').forEach(e=>e.classList.remove('err'));}
+function showErr(fid,eid){const f=document.getElementById(fid);const e=document.getElementById(eid);if(f)f.classList.add('err');if(e)e.classList.add('show');}
+function placeOrder(){
+  if(!cart.length){showMsg('❌','Empty Basket','Please add items to your basket before checking out.');return;}
+  clearErrs();let ok=true;
+  const req=[['co-fn','e-fn'],['co-ln','e-ln'],['co-phone','e-phone'],['co-addr','e-addr'],['co-city','e-city'],['co-zip','e-zip']];
+  req.forEach(([f,e])=>{if(!document.getElementById(f)?.value.trim()){showErr(f,e);ok=false;}});
+  const email=document.getElementById('co-email')?.value.trim();
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('co-email','e-email');ok=false;}
+  if(!document.getElementById('co-prov')?.value){showErr('co-prov','e-prov');ok=false;}
+  if(currentPM==='card'){
+    const cn=document.getElementById('co-card')?.value.replace(/\s/g,'');
+    if(!cn||cn.length<16){showErr('co-card','e-card');ok=false;}
+    if(!document.getElementById('co-exp')?.value.trim()){showErr('co-exp','e-exp');ok=false;}
+    if(!document.getElementById('co-cvv')?.value.trim()){showErr('co-cvv','e-cvv');ok=false;}
+    if(!document.getElementById('co-cname')?.value.trim()){showErr('co-cname','e-cname');ok=false;}
+  } else if(currentPM==='gcash'){
+    if(!document.getElementById('co-gcash')?.value.trim()){showErr('co-gcash','e-gcash');ok=false;}
+  }
+  if(!ok) return;
+  const orderId='C-'+Date.now().toString().slice(-8);
+  document.getElementById('success-order-id').textContent='Order #'+orderId;
+  document.getElementById('success-overlay').classList.add('show');
+  // Auto-track this new order
+  SAMPLE_ORDERS[orderId]={customer:document.getElementById('co-fn').value+' '+document.getElementById('co-ln').value,items:cart.map(i=>i.name),total:cart.reduce((s,i)=>s+i.price*i.qty,0)+(cart.reduce((s,i)=>s+i.price*i.qty,0)>=500?0:59),step:1};
+  cart=[];updateCartBadge();
+  setTimeout(()=>{document.getElementById('track-input').value=orderId;},500);
+}
+function closeSuccess(){document.getElementById('success-overlay').classList.remove('show');}
+
+// ═══ TRACKING ═══
+function trackOrder(){
+  const id=document.getElementById('track-input').value.trim().toUpperCase();
+  const result=document.getElementById('track-result');
+  if(!id){result.innerHTML='<p style="color:var(--red);font-size:.9rem">Please enter an Order ID.</p>';return;}
+  const order=SAMPLE_ORDERS[id];
+  if(!order){result.innerHTML=`<div class="track-card"><p style="color:var(--red);font-weight:700">❌ Order not found.</p><p style="font-size:.85rem;color:var(--brown-mid);margin-top:.5rem">Please check your Order ID and try again.</p></div>`;return;}
+  const stepsHTML=TRACK_STEPS.map((s,i)=>{
+    const done=i<order.step,current=i===order.step-1,pending=i>=order.step;
+    return `<div class="track-step">
+      <div class="step-dot ${done?'done':current?'current':'pending'}">${done?'✓':s.icon}</div>
+      <div class="step-line"></div>
+      <div class="step-info"><h4 style="color:${done?'var(--green)':current?'var(--brown)':'var(--brown-light)'}">${s.label}</h4><p>${done||current?s.desc:'Pending…'}</p></div>
+    </div>`;
+  }).join('');
+  result.innerHTML=`<div class="track-card">
+    <div class="track-header">
+      <div><div class="track-id">${id}</div><div style="font-size:.85rem;color:var(--brown-mid);margin-top:3px">Customer: ${order.customer}</div><div style="font-size:.82rem;color:var(--brown-mid);margin-top:2px">Items: ${order.items.join(', ')}</div></div>
+      <div style="text-align:right"><span class="tag tag-red">₱${order.total}</span></div>
+    </div>
+    <div class="track-steps">${stepsHTML}</div>
+  </div>`;
+}
+
+// ═══ INVENTORY ═══
+function renderInventory(filter=''){
+  const body=document.getElementById('inv-body');
+  if(!body) return;
+  const items=MENU.filter(i=>!filter||i.name.toLowerCase().includes(filter.toLowerCase())||i.cat.toLowerCase().includes(filter.toLowerCase()));
+  body.innerHTML=items.map(item=>{
+    const pct=Math.min(100,Math.round(item.stock/100*100));
+    const color=item.stock===0?'#D7263D':item.stock<15?'#e65100':'#1a9e5c';
+    const status=item.stock===0?'<span class="tag" style="background:var(--red-light);color:var(--red)">Out of Stock</span>':item.stock<15?'<span class="tag" style="background:#fff3e0;color:#e65100">Low Stock</span>':'<span class="tag tag-green">In Stock</span>';
+    return `<tr>
+      <td><strong>${item.emoji} ${item.name}</strong></td>
+      <td style="text-transform:capitalize">${item.cat}</td>
+      <td>₱${item.price}</td>
+      <td><strong>${item.stock}</strong> units</td>
+      <td><div class="stock-bar-wrap"><div class="stock-bar" style="width:${pct}%;background:${color}"></div></div></td>
+      <td>${status}</td>
+    </tr>`;
+  }).join('');
+}
+function filterInventory(v){renderInventory(v);}
+
+// ═══ SUPPLIERS ═══
+function renderSuppliers(){
+  const g=document.getElementById('supplier-grid');
+  if(!g) return;
+  g.innerHTML=SUPPLIERS.map(s=>`
+    <div class="sup-card">
+      <div class="sup-name">🏭 ${s.name}</div>
+      <div class="sup-item"><span>Supplies:</span> ${s.supplies}</div>
+      <div class="sup-item"><span>📞</span> ${s.contact}</div>
+      <div class="sup-item"><span>📍</span> ${s.location}</div>
+      <div class="sup-item"><span>Since:</span> ${s.since}</div>
+    </div>`).join('');
+}
+
+// ═══ REVIEWS ═══
+let allReviews=[...REVIEWS_DATA];
+function renderReviews(){
+  const g=document.getElementById('review-grid');
+  if(!g) return;
+  const avg=(allReviews.reduce((s,r)=>s+r.rating,0)/allReviews.length).toFixed(1);
+  document.getElementById('avg-rating').textContent=avg;
+  document.getElementById('total-reviews').textContent=`Based on ${allReviews.length} reviews`;
+  const counts=[5,4,3,2,1].map(n=>({stars:n,count:allReviews.filter(r=>r.rating===n).length}));
+  document.getElementById('rating-bars').innerHTML=counts.map(c=>`
+    <div class="rbar-row">
+      <span style="width:12px">${c.stars}</span>★
+      <div class="rbar"><div class="rbar-fill" style="width:${allReviews.length?Math.round(c.count/allReviews.length*100):0}%"></div></div>
+      <span>${c.count}</span>
+    </div>`).join('');
+  g.innerHTML=allReviews.map(r=>`
+    <div class="rev-card">
+      <div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      <p class="rev-text">"${r.text}"</p>
+      <div class="rev-author">
+        <div class="rev-avatar">${r.name.charAt(0)}</div>
+        <div><div class="rev-name">${r.name}</div><div class="rev-date">${r.date}</div></div>
+      </div>
+    </div>`).join('');
+  // Stars input
+  const si=document.getElementById('star-input');
+  if(si){
+    si.querySelectorAll('span').forEach((s,i)=>{
+      s.addEventListener('click',()=>{selectedStars=i+1;si.querySelectorAll('span').forEach((sp,j)=>sp.classList.toggle('active',j<selectedStars));});
+      s.addEventListener('mouseover',()=>si.querySelectorAll('span').forEach((sp,j)=>sp.classList.toggle('active',j<=i)));
+      s.addEventListener('mouseout',()=>si.querySelectorAll('span').forEach((sp,j)=>sp.classList.toggle('active',j<selectedStars)));
+    });
+  }
+}
+function submitReview(){
+  const name=document.getElementById('rv-name')?.value.trim();
+  const text=document.getElementById('rv-text')?.value.trim();
+  if(!name||!text||!selectedStars){showMsg('⚠️','Incomplete','Please fill in your name, rating, and review.');return;}
+  const now=new Date();
+  allReviews.unshift({name,rating:selectedStars,text,date:`${now.toLocaleString('default',{month:'short'})} ${now.getDate()}, ${now.getFullYear()}`});
+  document.getElementById('rv-name').value='';document.getElementById('rv-text').value='';selectedStars=0;
+  document.querySelectorAll('#star-input span').forEach(s=>s.classList.remove('active'));
+  renderReviews();showMsg('✅','Thank You!','Your review has been submitted. Thanks for the feedback!');
+}
+
+// ═══ CONTACT ═══
+function sendMsg(){
+  const n=document.getElementById('cf-name')?.value.trim();
+  const e=document.getElementById('cf-email')?.value.trim();
+  const s=document.getElementById('cf-subj')?.value.trim();
+  const m=document.getElementById('cf-msg')?.value.trim();
+  if(!n||!e||!s||!m){showMsg('⚠️','Incomplete Form','Please fill in all fields before sending.');return;}
+  ['cf-name','cf-email','cf-subj','cf-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  showMsg('✅','Message Sent!','Thank you! We\'ll get back to you within 24 hours.');
+}
+
+// ═══ UTILITY ═══
+function showMsg(icon,title,body){
+  document.getElementById('msg-icon').textContent=icon;
+  document.getElementById('msg-title').textContent=title;
+  document.getElementById('msg-body').textContent=body;
+  document.getElementById('msg-overlay').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHOTO MANAGEMENT — localStorage + hardcode support
+// ═══════════════════════════════════════════════════════════════
+//
+// ┌─────────────────────────────────────────────────────────────┐
+// │  Product IDs:                                               │
+// │    1=BBKing Classic Crinkl Fries 2=Loaded Cheese Fries      │
+// │    3=Spicy Sriracha Fries    4=Truffle Parmesan Fries       │
+// │    5=BBqueen Smash Burger    6=BBQ Bacon Burger             │
+// │    7=Crispy Chicken Burger   8=Mushroom Swiss Burger        │
+// │    9=BBPrinceClassic Beef Hotdog 10=Cheesy Chili Dog        │
+// │    11=Corndog Bites (6 pcs)  12= BBPrincess Iced Lemonade   │   
+// │    13=Chocolate Milkshake    14=Burger+Fries Combo          │
+// │    15=Ruth Family Feast Combo                               │
+// │                                                             │
+// │    HARDCODE OWNER PHOTOS:                                   │
+// │    HARDCODED_OWNER_PHOTOS.khael  = "images/khael.jpg";      │
+// │    HARDCODED_OWNER_PHOTOS.marnel = "images/marnel.jpg";     │
+// └─────────────────────────────────────────────────────────────┘
+
+// ── HARDCODE YOUR PHOTO PATHS HERE ──────────────────────────────
+const HARDCODED_PRODUCT_PHOTOS = {
+   1: "images/Loaded-Cheese-Fries-2.jpg",
+   2: "images/Loaded-Cheese-Fries-2.jpg",
+   3: "images/ALR-8705697-loaded-sriracha-fries-recipe-VAT-4x3-3-77261896a3c1451faf901f60e1c9c1f8.jpg",
+   4: "images/TruffleParmFries.webp",
+   5: "images/images.jpg",
+   6: "images/BBQ-Bacon-Double-Cheeseburger-Wide.jpg",
+   7: "images/Crispiest-buttermilk-fried-chicken-burgers-90854e5.jpg",
+   8: "images/mushroom-swiss-burgers.jpg",
+   9: "images/images (1).jpg",
+   10: "images/recipe-desktop-merkts-cheesy-hot-dawg.jpg",
+   11: "images/corn-dog-bites.jpg",
+   12: "images/images (2).jpg",
+   13: "images/Brownie-Milkshake-Recipe-20-scaled.jpg",
+   14: "images/burger-fries-combo-4056765.webp",
+   15: "images/images (3).jpg",
+};
+
+const HARDCODED_OWNER_PHOTOS = {
+  khael:  "images/no.bmp", 
+  marnel: "images/yes.bmp",   
+};
+// ────────────────────────────────────────────────────────────────
+
+const LS_PRODUCT_KEY = 'mf_product_photos';
+const LS_OWNER_KEY   = 'mf_owner_photos';
+
+// Merge: hardcoded paths take priority, then localStorage base64
+const productPhotos = {};
+
+function initPhotos(){
+  // Load product photos from localStorage
+  try {
+    const stored = JSON.parse(localStorage.getItem(LS_PRODUCT_KEY)||'{}');
+    Object.assign(productPhotos, stored);
+  } catch(e){}
+  // Hardcoded paths override localStorage (they are file paths / URLs)
+  Object.entries(HARDCODED_PRODUCT_PHOTOS).forEach(([id,src])=>{
+    if(src) productPhotos[parseInt(id)] = src;
+  });
+
+  // Load owner photos
+  let storedOwners = {};
+  try { storedOwners = JSON.parse(localStorage.getItem(LS_OWNER_KEY)||'{}'); } catch(e){}
+
+  ['khael','marnel'].forEach(key=>{
+    const src = HARDCODED_OWNER_PHOTOS[key] || storedOwners[key] || '';
+    if(src){
+      const imgEl = document.getElementById(key+'-img');
+      const phEl  = document.getElementById(key+'-placeholder');
+      if(imgEl){ imgEl.src=src; imgEl.style.display='block'; }
+      if(phEl)  phEl.style.display='none';
+    }
+  });
+}
+
+function saveProductPhoto(id, input){
+  if(!input.files||!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    productPhotos[id] = dataUrl;
+    // Persist to localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem(LS_PRODUCT_KEY)||'{}');
+      stored[id] = dataUrl;
+      localStorage.setItem(LS_PRODUCT_KEY, JSON.stringify(stored));
+    } catch(err){
+      showMsg('⚠️','Storage Full','Photo saved for this session only. Try a smaller image or clear other browser data.');
+    }
+    renderBestsellers();
+    renderMenu();
+    showToast('📷 Photo saved permanently!');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function loadOwnerPhoto(input, imgId, placeholderId){
+  if(!input.files||!input.files[0]) return;
+  const ownerKey = imgId.replace('-img',''); // 'khael' or 'marnel'
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    const img = document.getElementById(imgId);
+    const ph  = document.getElementById(placeholderId);
+    if(img){ img.src=dataUrl; img.style.display='block'; }
+    if(ph)  ph.style.display='none';
+    // Persist to localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem(LS_OWNER_KEY)||'{}');
+      stored[ownerKey] = dataUrl;
+      localStorage.setItem(LS_OWNER_KEY, JSON.stringify(stored));
+    } catch(err){
+      showMsg('⚠️','Storage Full','Photo saved for this session only. Try a smaller image.');
+    }
+    showToast('📷 Owner photo saved permanently!');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function clearAllPhotos(){
+  if(!confirm('Clear ALL uploaded photos from browser storage? Hardcoded paths will remain.')) return;
+  localStorage.removeItem(LS_PRODUCT_KEY);
+  localStorage.removeItem(LS_OWNER_KEY);
+  Object.keys(productPhotos).forEach(k=>{ if(!HARDCODED_PRODUCT_PHOTOS[k]) delete productPhotos[k]; });
+  ['khael','marnel'].forEach(key=>{
+    if(!HARDCODED_OWNER_PHOTOS[key]){
+      const imgEl=document.getElementById(key+'-img');
+      const phEl=document.getElementById(key+'-placeholder');
+      if(imgEl){imgEl.src='';imgEl.style.display='none';}
+      if(phEl) phEl.style.display='flex';
+    }
+  });
+  renderBestsellers();
+  renderMenu();
+  showToast('🗑️ Uploaded photos cleared.');
+}
+
+// ═══ INIT ═══
+initPhotos();
+initFilters();
+renderBestsellers();
+renderMenu();
+renderInventory();
+</script>
+</body>
+</html>
